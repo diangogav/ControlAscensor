@@ -16,6 +16,8 @@ class SerialPort
 	private $_dtr;
 	private $_rts;
 	private $_method;
+	private $_opened;
+	private $_fopen;
 
 	///////////////////
 	// CONSTRUCTORES //
@@ -31,6 +33,8 @@ class SerialPort
 		$this->_to = "off";
 		$this->_dtr = "off";
 		$this->_rts = "off";
+		$this->_opened = false;
+		$this->_fopen = null;
 	}
 
 	///////////////////////
@@ -65,6 +69,13 @@ class SerialPort
 	public function setMethod($method){
 		$this->_method = $method;
 	}
+	public function setOpened($opened){
+		$this->_opened = $opened;
+	}
+	public function setFopen($fopen){
+		$this->_fopen = $fopen;
+	}
+
 	// GETTERS
 	public function getPort(){
 		return $this->_port;
@@ -93,6 +104,12 @@ class SerialPort
 	public function getMethod(){
 		return $this->_method;
 	}
+	public function getOpened(){
+		return $this->_opened;
+	}
+	public function getFopen(){
+		return $this->_fopen;
+	}
 
 	/////////////
 	// METODOS //
@@ -100,27 +117,43 @@ class SerialPort
 
 	// PUBLICOS
 
-	public function writeSerial($command) {
-	  	// Se inicializa la conexion al puerto serial como false
-		$openSerialOK = false;
+	public function openSerial(){
+		if ( $this->getOpened() == true) {
+			echo "Error, el puerto {$this->getPort()} ya se encuentra abierto";
+			return false;
+		}
 		try {
 			// Ejecuta la configuracion de los parametros de conexion
 			exec( $this->configSerial() );
 			// Abre la conexion al puerto establecido en los parametros de conexion
 			$fp = fopen( $this->getPort(), $this->getMethod() );
+			$this->setFopen($fp);
 			// Al abrir el puerto se cambia a true la conexion al puerto serial
-			$openSerialOK = true;
+			$this->setOpened(true);
 		} catch(Exception $e) {
 			echo 'Mensaje: ' . $e->getMessage();
+			return false;
 		}
+		return true;
+	}
+
+	public function writeSerial($command) {	  	
 		// Si hay conexion por el puerto serial procede a enviar los datos al dispositivo
-		if($openSerialOK) {
+		if( $this->getOpened() ) {
 			// Realiza la escritura segun la conexion y el contenido pasado por parametro
-			$fw = fwrite($fp, $command);
-			// Cierra la conexion al puerto serial
-			$fc = fclose($fp);
+			return fwrite( $this->getFopen(), $command );			
 	    }
-	    return $fw;
+	    return "El puerto {$this->getPort()} esta cerrado, no se puede escribir";
+	}
+
+	public function closeSerial(){
+		if ( $this->getOpened() == false ) {
+			echo "El puerto {$this->getPort()} esta cerrado";
+			return false;
+		}
+		// Cierra la conexion al puerto serial
+		$fc = fclose( $this->getFopen() );
+		return true;
 	}
 
 	// PRIVADOS

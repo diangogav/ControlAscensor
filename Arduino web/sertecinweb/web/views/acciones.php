@@ -9,7 +9,7 @@ $cerrar = $_GET['cerrar'] ?? null;
 if ( isset($subir) || isset($bajar) || isset($abrir) || isset($cerrar)  ) 
 {
    $serial = new SerialPort("com1", "w+b", "9600");
-
+   $serial->openSerial();
    if ( isset($subir) ) {
       $serial->writeSerial(0);
    }
@@ -22,6 +22,7 @@ if ( isset($subir) || isset($bajar) || isset($abrir) || isset($cerrar)  )
    if ( isset($cerrar) ) {
       $serial->writeSerial(3);
    }
+   $serial->closeSerial();
 }
 
   
