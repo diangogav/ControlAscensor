@@ -49,6 +49,7 @@ function openSerial($command) {
 if(isset($_POST['submit1'])) {
     $fo = openSerial(1);
     $mensaje = "Enviado ON";
+    echo exec("ECHO $port");
 }
 
 if(isset($_POST['submit2'])) {

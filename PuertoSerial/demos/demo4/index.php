@@ -1,6 +1,6 @@
 <?php 
 require "escritura.php"; 
-require "lectura.php"; 
+// require "lectura.php"; 
 ?>
 
 <!DOCTYPE html>
@@ -21,12 +21,17 @@ require "lectura.php";
   
   <hr>
   <button id="consulta">Consulta AJAX</button>
+  <button id="clear">Limpiar</button>
   <br>
   <div id="mensaje"></div>
 
 <script src="js/jquery/jquery-3.3.1.min.js"></script>
 <script>
 $(function(){
+
+  $('#clear').click(function(){
+    $('#mensaje').text("");
+  });
 
   $('#consulta').click(function(){
     $.ajax({
