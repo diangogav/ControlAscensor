@@ -1,33 +1,4 @@
-<?php require "../../controller/SerialPort.php" ?>
-<?php 
-
-$subir = $_GET['subir'] ?? null;
-$bajar = $_GET['bajar'] ?? null;
-$abrir = $_GET['abrir'] ?? null;
-$cerrar = $_GET['cerrar'] ?? null;
-
-if ( isset($subir) || isset($bajar) || isset($abrir) || isset($cerrar)  ) 
-{
-   $serial = new SerialPort("com1", "w+b", "9600");
-   $serial->openSerial();
-   if ( isset($subir) ) {
-      $serial->writeSerial(0);
-   }
-   if ( isset($bajar) ) {
-      $serial->writeSerial(1);
-   }
-   if ( isset($abrir) ) {
-      $serial->writeSerial(2);
-   }
-   if ( isset($cerrar) ) {
-      $serial->writeSerial(3);
-   }
-   $serial->closeSerial();
-}
-
-  
-
-?>
+<?php //require "../../controller/SerialPort.php" ?>
 <!DOCTYPE html>
 <html lang="zxx">
    <head>
@@ -646,7 +617,9 @@ if ( isset($subir) || isset($bajar) || isset($abrir) || isset($cerrar)  )
       </footer>
 
       <!--js working-->
-      <script src='../js/jquery-2.2.3.min.js'></script>
+      <!-- <script src='../js/jquery-2.2.3.min.js'></script> -->
+      <script src='../js/jquery-3.3.1.min.js'></script>
+
       <!--//js working-->
             <!--  light box js -->
       <script src="../js/lightbox-plus-jquery.min.js"> </script> 
@@ -654,6 +627,9 @@ if ( isset($subir) || isset($bajar) || isset($abrir) || isset($cerrar)  )
 
       <!--responsiveslides banner-->
       <script src="../js/responsiveslides.min.js"></script>
+
+      <!-- custom javascript -->
+      <script src="../js/ajaxWrite.js"></script>
       <script>
          // You can also use "$(window).load(function() {"
          $(function () {
