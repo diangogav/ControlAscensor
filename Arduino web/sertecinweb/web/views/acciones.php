@@ -1,3 +1,4 @@
+<?php //require "../../controller/SerialPort.php" ?>
 <!DOCTYPE html>
 <html lang="zxx">
    <head>
@@ -18,24 +19,24 @@
       </script>
       <!--//meta tags ends here-->
       <!--booststrap-->
-      <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+      <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
       <!--//booststrap end-->
       <!-- font-awesome icons -->
-      <link href="css/font-awesome2.css" rel="stylesheet">
+      <link href="../css/font-awesome2.css" rel="stylesheet">
       <!-- //font-awesome icons -->
       <!-- Nav-CSS -->  
-       <link rel="stylesheet" href="css/main.css">
+      <link rel="stylesheet" href="../css/main.css">
       <!-- //Nav-CSS -->
-      <link href="css/popup-box.css" rel="stylesheet" type="text/css" media="all" />
+      <link href="../css/popup-box.css" rel="stylesheet" type="text/css" media="all" />
       <!-- //pop-ups-->
       <!--popup-box-->
-      <link href="css/owl.carousel.css" rel="stylesheet">
+      <link href="../css/owl.carousel.css" rel="stylesheet">
       <!--clients-->
       <!--lightbox slider-->
-      <link rel="stylesheet" href="css/lightbox.css">
+      <link rel="stylesheet" href="../css/lightbox.css">
       <!-- lightbox slider-->
       <!--stylesheets-->
-      <link href="css/style2.css" rel='stylesheet' type='text/css' media="all">
+      <link href="../css/style2.css" rel='stylesheet' type='text/css' media="all">
       <!--//stylesheets-->
       <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500" rel="stylesheet">
    </head>
@@ -413,13 +414,24 @@
                <div class="clearfix"></div>
             </div>
             <div class=" col-md-7">
-                  <div class="inner-info-w3ls">
-                     <h6>Elija la acción a realizar</h6>
-                       <button type="button" class="btn btn-warning">Subir un piso</button>
-                        <button type="button" class="btn btn-warning">Bajar un piso</button>
-                        <button type="button" class="btn btn-warning">Abrir puerta</button>
-                        <button type="button" class="btn btn-warning">Cerrar puerta</button>
-                  </div> </div>
+               <div class="inner-info-w3ls">
+                  <h6>Elija la acción a realizar</h6>
+                  <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
+                     <button type="submit" class="btn btn-warning" name="subir">
+                        Subir un piso
+                     </button>
+                     <button type="submit" class="btn btn-warning" name="bajar">
+                        Bajar un piso
+                     </button>
+                     <button type="submit" class="btn btn-warning" name="abrir">
+                        Abrir puerta   
+                     </button>
+                     <button type="submit" class="btn btn-warning" name="cerrar">
+                        Cerrar puerta
+                     </button>
+                  </form>
+               </div> 
+            </div>
 
                  <!-- <div class="w3layouts_more-buttn bolg-bttn">
                      <a href="#about" class="scroll">Get More</a>
@@ -605,14 +617,19 @@
       </footer>
 
       <!--js working-->
-      <script src='js/jquery-2.2.3.min.js'></script>
+      <!-- <script src='../js/jquery-2.2.3.min.js'></script> -->
+      <script src='../js/jquery-3.3.1.min.js'></script>
+
       <!--//js working-->
             <!--  light box js -->
-      <script src="js/lightbox-plus-jquery.min.js"> </script> 
+      <script src="../js/lightbox-plus-jquery.min.js"> </script> 
       <!-- //light box js--> 
 
       <!--responsiveslides banner-->
-      <script src="js/responsiveslides.min.js"></script>
+      <script src="../js/responsiveslides.min.js"></script>
+
+      <!-- custom javascript -->
+      <script src="../js/ajaxWrite.js"></script>
       <script>
          // You can also use "$(window).load(function() {"
          $(function () {
@@ -636,7 +653,7 @@
       <!--// responsiveslides banner-->     
      
       <!-- testimonial-plugin -->
-      <script src="js/owl.carousel.js"></script>
+      <script src="../js/owl.carousel.js"></script>
       <script>
          $(document).ready(function () {
             $("#owl-demo").owlCarousel({
@@ -652,7 +669,7 @@
       <!-- //testimonial-plugin -->
 
       <!--pop-up-box video-->
-      <script src="js/jquery.magnific-popup.js"></script>
+      <script src="../js/jquery.magnific-popup.js"></script>
       <script>
          $(document).ready(function() {
          $('.popup-with-zoom-anim').magnificPopup({
@@ -672,15 +689,15 @@
       <!-- //pop-up-box video -->
      
       <!-- start-smoth-scrolling -->
-      <script src="js/move-top.js"></script>
+      <script src="../js/move-top.js"></script>
                  <!-- menu -->
-      <script src="js/main.js"></script>
+      <script src="../js/main.js"></script>
       <!-- //menu -->
      
       <!--bootstrap working-->
-  <script src="js/bootstrap.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
       <!-- //bootstrap working-->
-      <script src="js/easing.js"></script>
+      <script src="../js/easing.js"></script>
       <script>
          jQuery(document).ready(function ($) {
             $(".scroll").click(function (event) {

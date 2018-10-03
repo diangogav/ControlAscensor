@@ -1,8 +1,8 @@
 <?php
 
-//////////////////////////////////////////////////
-// ENVIAR DATOS POR PUERTO SERIAL PHP - ARDUINO //
-//////////////////////////////////////////////////
+//////////////////////////////////////////////////////////
+// ENVIAR/RECIBIR DATOS POR PUERTO SERIAL PHP - ARDUINO //
+//////////////////////////////////////////////////////////
 
 // Parametros de conexion
 $port = "com1"; // Puerto de conexion
@@ -16,8 +16,8 @@ $rts = "off";
 $method = "w+b"; // metodo escritura (w)
 
 // Configuracion de los parametros para realizar conexion por puerto serial
-function configSerial(){
-	global $port, $baud, $parity, $data, $stop, $to, $dtr, $rts;
+function configSerial($port){
+	global $baud, $parity, $data, $stop, $to, $dtr, $rts;
 	return "mode ".$port.": BAUD=".$baud." PARITY=".$parity." DATA=".$data." STOP=".$stop." to=".$to." dtr=".$dtr." rts=".$rts;
 }
 
@@ -27,11 +27,11 @@ function openSerial($command) {
 	$openSerialOK = false;
 	try {
 		// Ejecuta la configuracion de los parametros de conexion
-		exec( configSerial() );
+		echo $config = configSerial($port);
+		echo "<br>";
+		exec( $config );
 		// Abre la conexion al puerto establecido en los parametros de conexion
 		$fp = fopen($port, $method);
-    	echo $fp . "<br>";
-
 		// Al abrir el puerto se cambia a true la conexion al puerto serial
 		$openSerialOK = true;
 	} catch(Exception $e) {
@@ -44,32 +44,15 @@ function openSerial($command) {
 		// Cierra la conexion al puerto serial
 		$fc = fclose($fp);
     }
-    echo $fw . "<br>";// devuelve cantidad de bytes escritos o false si da error
-    echo $fc . "<br>";	
 }
 
 if(isset($_POST['submit1'])) {
     $fo = openSerial(1);
+    $mensaje = "Enviado ON";
+    echo exec("ECHO $port");
 }
 
 if(isset($_POST['submit2'])) {
     $fo = openSerial(0);
+    $mensaje = "Enviado OFF";
 }
-
-?>
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Demo PHP Arduino Comunicacizn Puerto Serial</title>
-  <meta charset="utf-8">
-</head>
-<body>
-  <h3>Demo PHP Arduino Comunicación Puerto Serial</h3>
-  <form method="post" action="<?php echo $_SERVER['PHP_SELF']; ?>">
-    <input type="submit" name="submit1" value="ON"><br>
-    <input type="submit" name="submit2" value="OFF"><br>   
-  </form>
-
-</body>
-</html>
-
