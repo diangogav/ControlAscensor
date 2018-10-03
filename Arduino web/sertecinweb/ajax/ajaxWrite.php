@@ -2,6 +2,9 @@
 <?php 
 
 $botonPresionado = $_POST['botonPresionado'];
+$data = [
+   'botonPresionado' => $_POST['botonPresionado']
+];
 
 $serial = new SerialPort("com1", "w+b", "9600");
 $serial->openSerial();
@@ -19,6 +22,6 @@ if ( $botonPresionado == "cerrar" ) {
 }
 $serial->closeSerial();
 
-echo $botonPresionado;  
+echo json_encode($data);  
 
 ?>

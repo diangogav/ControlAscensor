@@ -445,7 +445,7 @@
                      <h6>El ascensor se encuentra en este piso</h6>
                      <h3>2</h3>
                      <h6>Se encuentra con las puertas</h6>
-                     <h3>Abiertas</h3>
+                     <h3 id="puertas">Cerrado</h3>
                      <!--<p><span class="fa fa-calendar-check-o" aria-hidden="true"></span>15 july 2017</p>
                      <p class="para-agileits">Aenean pulvinar diam vel felis volutpat dictum, suscipit sapien scelerisque tempus non mollis massa. Aenean ac tellus
                         suscipit sapien scelerisque tempus non mollis massa.

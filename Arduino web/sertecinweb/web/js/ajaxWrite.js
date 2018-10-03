@@ -4,17 +4,28 @@ $(function(){
    boton.on("click", function(e){
       e.preventDefault();
       const nombreBoton = $(this).attr('name');
+      const puertas = $('h3#puertas');
       // alert(mensaje);
       $.ajax({
          url: "../../ajax/ajaxWrite.php",
          method: "post",
+         dataType: 'json',
          data : {
             "botonPresionado":nombreBoton
          },
          success: function(data){
-            console.log("Boton para "+data+" ascensor presionado!");
+            const botonPresionado = data.botonPresionado;
+            console.log("Boton para "+botonPresionado+" ascensor presionado!");
+            switch (botonPresionado) {
+               case 'abrir':
+                  puertas.text('Abiertas');
+               break;
+               case 'cerrar':
+                  puertas.text('Cerradas');
+               break;
+            }
          }
       });
    });
 
-})
+});
