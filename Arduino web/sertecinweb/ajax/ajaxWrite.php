@@ -1,24 +1,24 @@
 <?php require "../controller/SerialPort.php" ?>
 <?php 
 
-$boton = $_GET['boton'];
+$botonPresionado = $_POST['botonPresionado'];
 
 $serial = new SerialPort("com1", "w+b", "9600");
 $serial->openSerial();
-if ( $boton == "subir" ) {
+if ( $botonPresionado == "subir" ) {
    $serial->writeSerial(0);
 }
-if ( $boton == "bajar" ) {
+if ( $botonPresionado == "bajar" ) {
    $serial->writeSerial(1);
 }
-if ( $boton == "abrir" ) {
+if ( $botonPresionado == "abrir" ) {
    $serial->writeSerial(2);
 }
-if ( $boton == "cerrar" ) {
+if ( $botonPresionado == "cerrar" ) {
    $serial->writeSerial(3);
 }
 $serial->closeSerial();
 
-echo $boton;  
+echo $botonPresionado;  
 
 ?>

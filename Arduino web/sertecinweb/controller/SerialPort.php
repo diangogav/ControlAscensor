@@ -153,6 +153,7 @@ class SerialPort
 		}
 		// Cierra la conexion al puerto serial
 		$fc = fclose( $this->getFopen() );
+		$this->setOpened(false);
 		return true;
 	}
 

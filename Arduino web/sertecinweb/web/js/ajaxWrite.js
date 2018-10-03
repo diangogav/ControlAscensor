@@ -3,16 +3,16 @@ $(function(){
    let boton = $("button[name=subir], button[name=bajar], button[name=abrir], button[name=cerrar]");
    boton.on("click", function(e){
       e.preventDefault();
-      const nameBoton = $(this).attr('name');
+      const nombreBoton = $(this).attr('name');
       // alert(mensaje);
       $.ajax({
          url: "../../ajax/ajaxWrite.php",
-         method: "get",
+         method: "post",
          data : {
-            "boton":nameBoton
+            "botonPresionado":nombreBoton
          },
          success: function(data){
-            console.log(data);
+            console.log("Boton para "+data+" ascensor presionado!");
          }
       });
    });
