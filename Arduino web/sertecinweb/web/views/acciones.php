@@ -630,6 +630,7 @@
 
       <!-- custom javascript -->
       <script src="../js/ajaxWrite.js"></script>
+      <!-- <script src="../js/ajaxRead.js"></script> -->
       <script>
          // You can also use "$(window).load(function() {"
          $(function () {

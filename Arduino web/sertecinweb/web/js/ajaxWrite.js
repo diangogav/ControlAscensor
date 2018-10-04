@@ -1,5 +1,5 @@
-$(function(){
-
+$(function(){   
+   
    let boton = $("button[name=subir], button[name=bajar], button[name=abrir], button[name=cerrar]");
    boton.on("click", function(e){
       e.preventDefault();
@@ -24,8 +24,14 @@ $(function(){
                   puertas.text('Cerradas');
                break;
             }
+         },
+         error: function(jqXHR, textStatus, errorThrown){
+            alert(errorThrown);
+            // alert( "¡¡ERROR!!, Revisar consola (F12)" );
+            // console.log("A: " + jqXHR);
+            // console.log("ERROR: " + textStatus);
+            // console.log("MENSAJE DE ERROR: " + errorThrown);
          }
       });
    });
-
 });
