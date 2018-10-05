@@ -40,7 +40,7 @@ SerialPort.list((err, ports) => {
         console.error("No Serial ports found");
 
     // Iterate over all the serial ports, and look for an Arduino
-    let comName = "COM6";
+    let comName = "COM5";
     ports.some((port) => {
         if (port.manufacturer
             && port.manufacturer.match(/Arduino/)) {

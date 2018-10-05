@@ -6,7 +6,7 @@ $data = [
    'botonPresionado' => $_POST['botonPresionado']
 ];
 
-$serial = new SerialPort("com1", "w+b", "9600");
+$serial = new SerialPort("com7", "w+b", "9600");
 $serial->openSerial();
 if ( $botonPresionado == "subir" ) {
    $serial->writeSerial(0);
