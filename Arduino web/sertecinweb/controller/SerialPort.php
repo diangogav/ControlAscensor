@@ -159,6 +159,23 @@ class SerialPort
 		return true;
 	}
 
+	// public function connect(){
+	// 	$server = "mysql";
+	// 	$host = 'localhost';
+	// 	$dbname = 'arduino';
+	// 	$user = 'root';
+	// 	$pass = '';
+	// 	try{	
+	// 		$conexion = new PDO("{$server}:host={$host};dbname={$dbname};", $user, $pass);
+	// 	}catch(PDOException $e){
+	// 		echo 'Error conectando a la BBDD ' . $e->getMessage() ."<br>";
+	// 	}
+	// 	return $conexion;
+	// }
+
+	// public function statusElevator(){
+		
+	// }
 	// PRIVADOS
 
 	private function configSerial(){

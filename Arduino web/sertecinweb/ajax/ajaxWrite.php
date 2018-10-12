@@ -22,4 +22,4 @@ $serial->closeSerial();
 
 $success = true;
 ?>
-<?php require "ajaxRead.php" ?>
+<?php //require "ajaxRead.php" ?>
