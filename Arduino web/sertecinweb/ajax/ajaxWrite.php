@@ -18,6 +18,9 @@ if ( $botonPresionado == "abrir" ) {
 if ( $botonPresionado == "cerrar" ) {
    $serial->writeSerial(3);
 }
+if ( $botonPresionado == "reset" ) {
+   $serial->writeSerial(4);
+}
 $serial->closeSerial();
 
 $success = true;

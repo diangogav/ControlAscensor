@@ -429,6 +429,9 @@
                      <button type="submit" class="btn btn-warning" name="cerrar">
                         Cerrar puerta
                      </button>
+                     <button type="submit" class="btn btn-warning" name="reset">
+                        Resetear
+                     </button>
                   </form>
                </div> 
             </div>
