@@ -417,18 +417,29 @@
                <div class="inner-info-w3ls">
                   <h6>Elija la acción a realizar</h6>
                   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
-                     <button type="submit" class="btn btn-warning" name="subir">
-                        Subir un piso
-                     </button>
-                     <button type="submit" class="btn btn-warning" name="bajar">
-                        Bajar un piso
-                     </button>
-                     <button type="submit" class="btn btn-warning" name="abrir">
-                        Abrir puerta   
-                     </button>
-                     <button type="submit" class="btn btn-warning" name="cerrar">
-                        Cerrar puerta
-                     </button>
+                     <div class="row justify-content-start">
+                        <div class="col-md-3">
+                        <button type="submit" class="btn btn-warning" name="subir">
+                           Subir un piso
+                        </button>
+                        <button type="submit" class="btn btn-warning mt-2" name="bajar">
+                           Bajar un piso
+                        </button>                        
+                     </div>
+                     <div class="col-md-3">
+                        <button type="submit" class="btn btn-warning" name="abrir">
+                           Abrir puerta   
+                        </button>
+                        <button type="submit" class="btn btn-warning mt-2" name="cerrar">
+                           Cerrar puerta
+                        </button>                        
+                     </div>
+                     <div class="col-md-3">
+                        <button type="submit" class="btn btn-warning" name="reset">
+                           Resetear
+                        </button>     
+                     </div>                   
+                     </div>
                   </form>
                </div> 
             </div>
@@ -443,9 +454,9 @@
                <div class="col-md-7 blog-info-w3layouts">
                   <div class="inner-info-w3ls">
                      <h6>El ascensor se encuentra en este piso</h6>
-                     <h3>2</h3>
+                     <h3 id="piso">Cargando...</h3>
                      <h6>Se encuentra con las puertas</h6>
-                     <h3 id="puertas">Cerrado</h3>
+                     <h3 id="puertas">Cargando...</h3>
                      <!--<p><span class="fa fa-calendar-check-o" aria-hidden="true"></span>15 july 2017</p>
                      <p class="para-agileits">Aenean pulvinar diam vel felis volutpat dictum, suscipit sapien scelerisque tempus non mollis massa. Aenean ac tellus
                         suscipit sapien scelerisque tempus non mollis massa.
@@ -630,6 +641,7 @@
 
       <!-- custom javascript -->
       <script src="../js/ajaxWrite.js"></script>
+      <script src="../js/ajaxRead.js"></script>
       <script>
          // You can also use "$(window).load(function() {"
          $(function () {

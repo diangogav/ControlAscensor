@@ -119,7 +119,9 @@ class SerialPort
 
 	public function openSerial(){
 		if ( $this->getOpened() == true) {
-			echo "Error, el puerto {$this->getPort()} ya se encuentra abierto";
+			$error = "Error, el puerto {$this->getPort()} ya se encuentra abierto";
+			// Coloca el error HTTP en la cabecera
+			$this->errorToAjax(404, $error);
 			return false;
 		}
 		try {
@@ -157,13 +159,32 @@ class SerialPort
 		return true;
 	}
 
+	// public function connect(){
+	// 	$server = "mysql";
+	// 	$host = 'localhost';
+	// 	$dbname = 'arduino';
+	// 	$user = 'root';
+	// 	$pass = '';
+	// 	try{	
+	// 		$conexion = new PDO("{$server}:host={$host};dbname={$dbname};", $user, $pass);
+	// 	}catch(PDOException $e){
+	// 		echo 'Error conectando a la BBDD ' . $e->getMessage() ."<br>";
+	// 	}
+	// 	return $conexion;
+	// }
+
+	// public function statusElevator(){
+		
+	// }
 	// PRIVADOS
 
 	private function configSerial(){
 		return "mode " . $this->getPort() . ": BAUD=" . $this->getBaud() . " PARITY=" . $this->getParity() . " DATA=".$this->getData() . " STOP=" . $this->getStop() . " to=" . $this->getTo() . " dtr=" . $this->getDtr() . " rts=" . $this->getRts();
 	}
 
-
+	private function errorToAjax($status, $mensaje){
+		header("HTTP/1.0 {$status} {$mensaje}");
+	}
 
 
 }
