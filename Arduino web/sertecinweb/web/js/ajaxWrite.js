@@ -25,7 +25,8 @@ $(function(){
          //    }
          // },
          error: function(jqXHR, textStatus, errorThrown){
-            alert(errorThrown);
+            alert("Error al mandar datos");
+            // alert(errorThrown);
             // alert( "¡¡ERROR!!, Revisar consola (F12)" );
             // console.log("A: " + jqXHR);
             // console.log("ERROR: " + textStatus);
