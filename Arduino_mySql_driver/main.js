@@ -40,7 +40,7 @@ SerialPort.list((err, ports) => {
         console.error("No Serial ports found");
 
     // Iterate over all the serial ports, and look for an Arduino
-    let comName = "COM5";
+    let comName = "COM3";
     ports.some((port) => {
         if (port.manufacturer
             && port.manufacturer.match(/Arduino/)) {
@@ -109,6 +109,7 @@ function receiveSerial(dataBuf) {
         if (parser.parse(str[i])) {
             // If a complete line has been received,
             // insert it into the database
+            console.log(parser.message);
             insertValueIntoDatabase(parser.message);
         }
     }
