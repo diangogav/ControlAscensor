@@ -2,7 +2,6 @@
 <?php 
 
 $botonPresionado = $_POST['botonPresionado'];
-$success = false;
 
 $serial = new SerialPort("com7", "w+b", "9600");
 $serial->openSerial();
@@ -23,6 +22,12 @@ if ( $botonPresionado == "reset" ) {
 }
 $serial->closeSerial();
 
-$success = true;
+if ( $_POST['botonPresionado'] ) {
+	$data = [ 
+		'botonPresionado' => $_POST['botonPresionado'] 
+	];
+	echo json_encode($data);  
+	return true;
+}
+
 ?>
-<?php //require "ajaxRead.php" ?>
