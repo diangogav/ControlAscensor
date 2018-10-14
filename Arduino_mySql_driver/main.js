@@ -27,6 +27,14 @@ function insertValueIntoDatabase(value) {
     });
 }
 
+function insertValueIntoCommand(value) {
+    const sql = 'INSERT INTO `Historic` (`command`) VALUES (?);';
+    con.query(sql, [value], function (err, result) {
+        if (err)
+            console.error(err);
+    });
+}
+
 // ------------ Serial ------------ //
 
 const SerialPort = require('serialport');
@@ -109,7 +117,10 @@ function receiveSerial(dataBuf) {
         if (parser.parse(str[i])) {
             // If a complete line has been received,
             // insert it into the database
-            console.log(parser.message);
+            if(parser.message.substring(0,7) == 'command'){
+                console.log('Es un comando')
+                insertValueIntoCommand(parser.message)
+            }
             insertValueIntoDatabase(parser.message);
         }
     }
