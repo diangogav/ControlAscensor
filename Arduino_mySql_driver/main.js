@@ -27,6 +27,14 @@ function insertValueIntoDatabase(value) {
     });
 }
 
+function insertValueIntoCommand(value) {
+    const sql = 'INSERT INTO `Historic` (`command`) VALUES (?);';
+    con.query(sql, [value], function (err, result) {
+        if (err)
+            console.error(err);
+    });
+}
+
 // ------------ Serial ------------ //
 
 const SerialPort = require('serialport');
@@ -40,7 +48,7 @@ SerialPort.list((err, ports) => {
         console.error("No Serial ports found");
 
     // Iterate over all the serial ports, and look for an Arduino
-    let comName = "COM5";
+    let comName = "COM3";
     ports.some((port) => {
         if (port.manufacturer
             && port.manufacturer.match(/Arduino/)) {
@@ -109,6 +117,10 @@ function receiveSerial(dataBuf) {
         if (parser.parse(str[i])) {
             // If a complete line has been received,
             // insert it into the database
+            if(parser.message.substring(0,7) == 'command'){
+                console.log('Es un comando')
+                insertValueIntoCommand(parser.message)
+            }
             insertValueIntoDatabase(parser.message);
         }
     }
