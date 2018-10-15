@@ -393,7 +393,7 @@
                   <a href="#about" class="scroll">
                   </a>
                </div>-->
-               <div class=" col-md-5 blog-info-w3layouts">
+               <div class=" col-md-5 mb-4">
                   <div class="inner-info-w3ls">
                      <h6>Elija el inmueble a controlar</h6>
                         <select>
@@ -413,7 +413,7 @@
                </div>
                <div class="clearfix"></div>
             </div>
-            <div class=" col-md-7">
+            <div class=" col-md-7 mb-4">
                <div class="inner-info-w3ls">
                   <h6>Elija la acción a realizar</h6>
                   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
@@ -451,9 +451,9 @@
                <div class="clearfix"></div>
             </div>-->
           
-               <div class="col-md-7 blog-info-w3layouts">
+               <div class="col-md-7">
                   <div class="inner-info-w3ls">
-                     <h6>El ascensor se encuentra en este piso</h6>
+                     <h6>El ascensor se encuentra en el nivel</h6>
                      <h3 id="piso">Cargando...</h3>
                      <h6>Se encuentra con las puertas</h6>
                      <h3 id="puertas">Cargando...</h3>

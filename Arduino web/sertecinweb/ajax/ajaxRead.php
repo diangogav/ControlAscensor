@@ -23,7 +23,7 @@ try{
 ///////////////////////////////////////////////////////////////////////////
 // Leer los datos de la tabla "data", para mostrar en la pagina con ajax //
 ///////////////////////////////////////////////////////////////////////////
-$query = "SELECT * FROM data ORDER BY ID DESC LIMIT 1";
+$query = "SELECT * FROM historic ORDER BY ID DESC LIMIT 1";
 $resultado = $conexion->query($query);
 $data = $resultado->fetch();
 

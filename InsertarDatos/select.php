@@ -2,7 +2,7 @@
 
 require "conexion.php";
 
-$query = "SELECT * FROM data ORDER BY ID DESC LIMIT 1";
+$query = "SELECT * FROM historic ORDER BY ID DESC LIMIT 1";
 
 $resultado = $conexion->query($query);
 
