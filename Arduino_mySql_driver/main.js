@@ -8,7 +8,7 @@ const con = MySQL.createConnection({
     host: "localhost",
     port: "3306",
     user: "root",
-    password: "",
+    password: "sagitario",
     database: "Arduino",
     charset: "utf8mb4_general_ci"
 });
@@ -39,7 +39,7 @@ function insertValueIntoCommand(value) {
 
 const SerialPort = require('serialport');
 
-const baudRate = 115200;
+const baudRate = 9600;
 
 SerialPort.list((err, ports) => {
     if (err)
@@ -48,7 +48,7 @@ SerialPort.list((err, ports) => {
         console.error("No Serial ports found");
 
     // Iterate over all the serial ports, and look for an Arduino
-    let comName = "COM3";
+    let comName = "COM7";
     ports.some((port) => {
         if (port.manufacturer
             && port.manufacturer.match(/Arduino/)) {
@@ -120,8 +120,10 @@ function receiveSerial(dataBuf) {
             if(parser.message.substring(0,7) == 'command'){
                 console.log('Es un comando')
                 insertValueIntoCommand(parser.message)
+            }else{
+                insertValueIntoDatabase(parser.message);    
             }
-            insertValueIntoDatabase(parser.message);
+            
         }
     }
 }
