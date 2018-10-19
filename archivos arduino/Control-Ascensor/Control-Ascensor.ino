@@ -23,14 +23,14 @@ uint8_t dat;
 uint8_t flagS = 0;
 uint8_t flagB = 0;
 uint8_t previousLevel;
+uint8_t flagMessage = 0;
 
 String ESTADO = "INICIO";
 
 SoftwareSerial sqlSerial (rxPin, txPin);
 
 void setup() {
-
-  //swSer.begin(BAUD_RATE);
+  
   Serial.begin(BAUD_RATE);
   
   pinMode(txPin, OUTPUT);
@@ -167,31 +167,34 @@ if(ESTADO == "SENSANDO"){
 if(ESTADO == "REPOSANDO PB"){
   digitalWrite(M2ABRE,LOW);
   digitalWrite(M2CIERRA,LOW);
-  
+
+if(flagMessage == 0){
   if(CheckOpenDoors() == 1){
-     sqlSerial.println(03);
-  }else if(CheckOpenDoors() == 0){
-    sqlSerial.println(00);
-  }
-     
+       sqlSerial.println(03);
+    }else if(CheckOpenDoors() == 0){
+      sqlSerial.println(00);
+    }
+    flagMessage = 1; 
+}   
   previousLevel = 0;
   dat = GetSerialData();
   //TRANSICION
   if(dat == 48){
+     flagMessage = 0; 
      ESTADO = "CONFIGURANDO SUBIR";
    }
 
    if(dat == 50 &&
       CheckOpenDoors() == 0)
    {
-      sqlSerial.println("ABRIENDO");
+      flagMessage = 0; 
       ESTADO = "ABRIENDO";
    }
 
    if(dat == 51 &&
       CheckOpenDoors() == 1)
    {
-      sqlSerial.println("CERRANDO");
+      flagMessage = 0;
       ESTADO = "CERRANDO";
    }
 }
@@ -220,38 +223,44 @@ if(ESTADO == "CERRANDO"){
   //ACCIONES
   digitalWrite(M2CIERRA,HIGH);
   digitalWrite(M2ABRE,LOW);
-  
-  if(previousLevel == 2){
-    sqlSerial.println(21);
-  }
-  if(previousLevel == 1){
-    sqlSerial.println(11);
-  }
-  if(previousLevel == 0){
-    sqlSerial.println(01);
-  }
 
+  if(flagMessage == 0){
+    if(previousLevel == 2){
+      sqlSerial.println(21);
+    }
+    if(previousLevel == 1){
+      sqlSerial.println(11);
+    }
+    if(previousLevel == 0){
+      sqlSerial.println(01);
+    }
+    flagMessage = 1;
+  }
+  
   //TRANSICCION
-  
-
    if(CheckOpenDoors() == 0){
       
       if(flagS == 0 && flagB == 0 && previousLevel == 0){
+          flagMessage = 0;
           ESTADO = "REPOSANDO PB";
       }
   
       if(flagS == 0 && flagB == 0 && previousLevel == 1){
+          flagMessage = 0;
           ESTADO = "REPOSANDO P1";
       }
   
       if(flagS == 0 && flagB == 0 && previousLevel == 2){
+          flagMessage = 0;
           ESTADO = "REPOSANDO P2";
       }
       if(flagS == 1){
+        flagMessage = 0;
         ESTADO = "SUBIENDO";    
       }
        
       if(flagB == 1){
+         flagMessage = 0;
          ESTADO = "BAJANDO";    
       } 
    }
@@ -261,12 +270,16 @@ if(ESTADO == "CERRANDO"){
 // Subiendo: Se enciende el motor M1 en sentido subir
 if(ESTADO == "SUBIENDO"){
   //ACCIONES
-  if(previousLevel == 0){
-     sqlSerial.println(50);
+  if(flagMessage == 0){
+    if(previousLevel == 0){
+       sqlSerial.println(50);
+    }
+    if(previousLevel == 1){
+       sqlSerial.println(51);
+    }
+    flagMessage = 1;
   }
-  if(previousLevel == 1){
-     sqlSerial.println(51);
-  }
+  
   digitalWrite(M2ABRE,LOW);
   digitalWrite(M2CIERRA,LOW);
   digitalWrite(M1SUBE,HIGH);
@@ -283,6 +296,7 @@ if(ESTADO == "SUBIENDO"){
      CheckP1() == 0 && 
      CheckP2() == 1))
      {
+     flagMessage = 0; 
      ESTADO = "PARANDO";    
    }
 }
@@ -306,7 +320,7 @@ if(ESTADO == "ABRIENDO"){
   digitalWrite(M2ABRE,HIGH);
   digitalWrite(M2CIERRA,LOW);
 
-
+if(flagMessage == 0){
   if((previousLevel == 2 && flagB == 0 && flagS == 0) ||
      (previousLevel == 1 && flagB == 0 && flagS == 1)){
     sqlSerial.println(22);
@@ -320,23 +334,28 @@ if(ESTADO == "ABRIENDO"){
      (previousLevel == 1 && flagB == 1 && flagS == 0)){
     sqlSerial.println(02);
   }
-  
+  flagMessage = 1;
+}
+
   if(CheckOpenDoors() == 1){
     
       if((previousLevel == 0 && flagS == 1) || 
          (previousLevel == 1 && flagS == 0 && flagB == 0) ||
          (previousLevel == 2 && flagB == 1)){
+           flagMessage = 0;
            ESTADO = "REPOSANDO P1";    
       }
     
       if((previousLevel == 0 && flagS == 0) ||
          ((previousLevel == 1 || previousLevel == 255) && flagB == 1)){
+           flagMessage = 0;
            ESTADO = "REPOSANDO PB";    
       }
     
       //TRANSICION
       if((previousLevel == 1 && flagS == 1) ||
          (previousLevel == 2 && flagB == 0)){
+           flagMessage = 0;
            ESTADO = "REPOSANDO P2";    
       }
       
@@ -350,11 +369,14 @@ if(ESTADO == "REPOSANDO P1"){
 
   digitalWrite(M2ABRE,LOW);
   digitalWrite(M2CIERRA,LOW);
-  
-  if(CheckOpenDoors() == 1){
-     sqlSerial.println(10);
-  }else if(CheckOpenDoors() == 0){
-    sqlSerial.println(13);
+
+  if(flagMessage == 0){
+     if(CheckOpenDoors() == 1){
+       sqlSerial.println(13);
+    }else if(CheckOpenDoors() == 0){
+      sqlSerial.println(10);
+    }
+    flagMessage = 1;
   }
      
   flagS = 0;
@@ -367,27 +389,30 @@ if(ESTADO == "REPOSANDO P1"){
   //TRANSICCION
   if(dat == 48){
      //NUEVO ESTADO
+     flagMessage = 0;
      ESTADO = "CONFIGURANDO SUBIR";   
    }else if(dat == 49){
      //NUEVO ESTADO
+     flagMessage = 0;
      ESTADO = "CONFIGURANDO BAJAR";   
    }
      
    if(dat == 50 &&
       CheckOpenDoors() == 0)
    {
-      Serial.println("ABRIENDO");
+      flagMessage = 0;
       ESTADO = "ABRIENDO";
    }
 
    if(dat == 51 &&
       CheckOpenDoors() == 1)
    {
-      Serial.println("CERRANDO");
+      flagMessage = 0;
       ESTADO = "CERRANDO";   
    }
 
   if(dat == 52){
+    flagMessage = 0;
     ESTADO = "RESETEANDO";
   }
 }
@@ -396,14 +421,17 @@ if(ESTADO == "REPOSANDO P1"){
 // Reposando P2: El ascensor se encuentra reposando en P2
 if(ESTADO == "REPOSANDO P2"){
   //ACCIONES
+  if(flagMessage == 0){
+    if(CheckOpenDoors() == 1){
+     sqlSerial.println(23);
+    }else if(CheckOpenDoors() == 0){
+      sqlSerial.println(20);
+    }
+      flagMessage = 1;
+  }
+  
   digitalWrite(M2ABRE,LOW);
   digitalWrite(M2CIERRA,LOW);
-  
-  if(CheckOpenDoors() == 1){
-     sqlSerial.println(20);
-  }else if(CheckOpenDoors() == 0){
-    sqlSerial.println(23);
-  }
      
   flagS = 0;
   previousLevel = 2;
@@ -415,22 +443,24 @@ if(ESTADO == "REPOSANDO P2"){
   //TRANSICCION
   if(dat == 49){
      //NUEVO ESTADO
+     flagMessage = 0; 
      ESTADO = "CONFIGURANDO BAJAR";   
    }
    
    if(dat == 50 && CheckOpenDoors() == 0)
    {
-      Serial.println("ABRIENDO");
+      flagMessage = 0;
       ESTADO = "ABRIENDO";
    }
 
    if(dat == 51 && CheckOpenDoors() == 1)
    {
-      Serial.println("CERRANDO");
+      flagMessage = 0;
       ESTADO = "CERRANDO";   
    }
 
    if(dat == 52){
+    flagMessage = 0;
     ESTADO = "RESETEANDO";
   }
 }
@@ -455,14 +485,17 @@ if(ESTADO == "CONFIGURANDO BAJAR"){
 // Bajando: Se enciende el motor M2 en sentido bajar
 if(ESTADO == "BAJANDO"){
   //ACCIONES
-  if(previousLevel == 2){
-      sqlSerial.println(62);
-  }
-  if(previousLevel == 1){
-      sqlSerial.println(61);
-  }
-  if(previousLevel == 255){
-      sqlSerial.println(255);
+  if(flagMessage == 0){
+    if(previousLevel == 2){
+        sqlSerial.println(62);
+    }
+    if(previousLevel == 1){
+        sqlSerial.println(61);
+    }
+    if(previousLevel == 255){
+        sqlSerial.println(255);
+    }  
+    flagMessage = 1;
   }
   
   digitalWrite(M2ABRE,LOW);
@@ -479,6 +512,8 @@ if(ESTADO == "BAJANDO"){
         CheckPB() == 1 &&
         CheckP1() == 0 && 
         CheckP2() == 0)){
+
+       flagMessage = 0;
        ESTADO = "PARANDO";    
      }
    }
