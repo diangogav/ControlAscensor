@@ -2,7 +2,7 @@
 
 try{
 
-	$base=new PDO('mysql:host=localhost; dbname=sertecin','root','');
+	$base=new PDO('mysql:host=localhost; dbname=sertecin','root','sagitario');
 
 	$base->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);	
 	

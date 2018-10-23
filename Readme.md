@@ -38,6 +38,31 @@
 
 ### 16- Finalmente se deben realziar las conexiones físicas como se muestran en la simulación adjunta en la carpeta del proyecto.
 
+#Configuracion Base de datos para impresion de reporte
+
+### 1- Configurar los parametros de conexión en los archivos:
+###		-Arduino web/sertecinweb/controller/conexion.php
+###		-Arduino web/sertecinweb/controller/login.php
+
+### 2- Configurar la tabla a consultar en los siguientes archivos:
+###	-Arduino web/sertecinweb/web/views/reportes/excel.php
+###	-Arduino web/sertecinweb/web/views/reportes/word.php
+###	-Arduino web/sertecinweb/web/views/reportes/pdf.php
+###	-Arduino web/sertecinweb/web/views/reportes/ver.php
+
+### Tienen este tipo de estructura el codigo a modificar:
+###  $query = "SELECT * FROM data";  -					--> Tabla (data o historic)
+###            $ejecutar = $conexion->query($query);
+###            foreach($ejecutar as $row){
+###             echo "
+###            <tr>
+###                <td>".$row['id']."</td>				-> $row['id'] para ambas tablas
+###                <td>".Comando($row['data'])."</td>	-> $row['data'] para data / $row['command'] para historic
+###             <td>".$row['time']."</td>				-> $row['time'] para ambas tablas
+###          </tr>   
+###          ";
+###         }
+
 # Comandos
 
 ### Reposando PB con Puertas Cerradas 00

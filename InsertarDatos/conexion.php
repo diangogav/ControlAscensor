@@ -4,7 +4,7 @@ $server = "mysql";
 $host = 'localhost';
 $dbname = 'arduino';
 $user = 'root';
-$pass = '';
+$pass = 'sagitario';
 
 try{	
 	$conexion = new PDO("{$server}:host={$host};dbname={$dbname};", $user, $pass);

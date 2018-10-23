@@ -28,13 +28,13 @@
          </thead>
          <tbody>
          <?php     
-            $query = "SELECT * FROM historic";
+            $query = "SELECT * FROM data";
             $ejecutar = $conexion->query($query);
             foreach($ejecutar as $row){
              echo "
              <tr>
                 <td>".$row['id']."</td>
-                <td>".Comando($row['command'])."</td>
+                <td>".Comando($row['data'])."</td>
                 <td>".$row['time']."</td>
              </tr>   
              ";
