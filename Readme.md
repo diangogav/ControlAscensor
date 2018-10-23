@@ -38,7 +38,7 @@
 
 ### 16- Finalmente se deben realziar las conexiones físicas como se muestran en la simulación adjunta en la carpeta del proyecto.
 
-#Configuracion Base de datos para impresion de reporte
+# Configuracion Base de datos para impresion de reporte
 
 ### 1- Configurar los parametros de conexión en los archivos:
 ###		-Arduino web/sertecinweb/controller/conexion.php
