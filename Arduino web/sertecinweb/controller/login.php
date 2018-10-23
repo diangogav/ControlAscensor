@@ -2,11 +2,9 @@
 
 try{
 
-	$base=new PDO('mysql:host=localhost; dbname=sertecin_database','root','LeoJimenez');
+	$base=new PDO('mysql:host=localhost; dbname=sertecin','root','');
 
-	$base->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
-
-	
+	$base->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);	
 	
 	$sql="SELECT * FROM usuarios WHERE CI_USUAR=:login and PASSWORD=:password";
 
@@ -17,21 +15,22 @@ try{
 	$resultado->bindValue(":login",$login);
 	$resultado->bindValue(":password",$password);
 
-	$resultado->execute();
-	
+	$resultado->execute();	
 
 	$numero_registro=$resultado->rowCount();
 
 	if($numero_registro!=0){
-
 		session_start();
-
-		header("location:../web/index.html");
-					
+		while($registro = $resultado->fetch()) {
+		    $_SESSION['nombre'] = $registro['prime_nombr'];
+		    $_SESSION['apellido'] = $registro['prime_apell'];
+		    $_SESSION['cedula'] = $registro['ci_usuar'];
+		}
+		header("location:../web/views/index.php");					
 	   														
 		}else{
 
-		header("location:index.html");
+		header("location:../index.html");
 		}
 		
 	   

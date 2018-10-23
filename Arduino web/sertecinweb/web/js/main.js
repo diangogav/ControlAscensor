@@ -63,24 +63,24 @@ var toggle_nav_container = function () {
 //the div on the page whose ID matches said value. This only works if you use 
 //a consistent naming scheme for the navbar anchors and div IDs
 
-var gotoByScroll = function (){
+// var gotoByScroll = function (){
 
-	$(".m_nav_item a").on("click", function(e) {
+// 	$(".m_nav_item a").on("click", function(e) {
 
-		e.preventDefault();
-		// var $divID =$(this).attr("href");
-		// var $scrollToDiv = "$(" + "'" + $divID + "'" +")";
+// 		e.preventDefault();
+// 		// var $divID =$(this).attr("href");
+// 		// var $scrollToDiv = "$(" + "'" + $divID + "'" +")";
 		
-		$('html,body').animate({
-   scrollTop: $($(this).attr("href")).offset().top - 50
-}, "slow");
+// 		$('html,body').animate({
+//    scrollTop: $($(this).attr("href")).offset().top - 50
+// }, "slow");
 
-	});
+// 	});
 		
 
 
 
-}
+// }
 
 
 

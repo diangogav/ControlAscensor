@@ -1,4 +1,4 @@
-<?php //require "../../controller/SerialPort.php" ?>
+<?php require "../../controller/session.php" ?>
 <!DOCTYPE html>
 <html lang="zxx">
    <head>
@@ -58,18 +58,24 @@
  -->
 <div id="m_nav_container" class="m_nav">
   <ul id="m_nav_list" class="m_nav">
-                           <li class="m_nav_itemm" id="m_nav_item_1"> <a href="acciones.php" >Acciones</a></li>
-                           <li class="m_nav_item" id="moble_nav_item_2"> <a href="#about" class="scroll">Imprimir</a></li>
-                           <li class="m_nav_item" id="moble_nav_item_3"> <a href="#services" class="scroll">Estadisticas</a></li>
-                           <li class="m_nav_item" id="moble_nav_item_4"><a href="#gallery" class="scroll">Contactos</a></li>
-                           <!--<li class="m_nav_item" id="moble_nav_item_6"> <a href="#blog" class="scroll">Blog</a></li>
-                           <li class="m_nav_item" id="moble_nav_item_7"> <a href="#contact" class="scroll">Contact</a></li>-->
+   <li class="m_nav_itemm" id="m_nav_item_1">
+      <a href="acciones.php" >Acciones</a>
+   </li>
+   <li class="m_nav_item" id="moble_nav_item_2"><a href="#about" class="scroll">Imprimir</a></li>
+   <li class="m_nav_item" id="moble_nav_item_3"> <a href="#services" class="scroll">Estadisticas</a></li>
+   <li class="m_nav_item" id="moble_nav_item_4"><a href="#gallery" class="scroll">Contactos</a></li>
+   <li class="m_nav_item" id="moble_nav_item_4">
+      <a href="../../controller/logout.php" class="scroll">Desloguearse</a>
+   </li>
+   <!--<li class="m_nav_item" id="moble_nav_item_6"> <a href="#blog" class="scroll">Blog</a></li>
+   <li class="m_nav_item" id="moble_nav_item_7"> <a href="#contact" class="scroll">Contact</a></li>-->
   </ul>
 </div>
                </div>
              <div class="container">
                <div class="hedder-logo">
-                  <h1><a href="index.html">Sertecinweb</a></h1>
+                  <h1><a href="index.php">Sertecinweb</a></h1>
+                  <h4 class="text-light">Usuario Logueado: <?php echo $_SESSION['nombre']." ".$_SESSION['apellido']."<br>"."Cédula: V-".$_SESSION['cedula'] ?> </h4>
                </div>
               <!-- <div class="banner_social">
                   <ul class="its_social_list">
@@ -111,7 +117,7 @@
                            </div>
                         </div>
                      </div>
-                  </li>
+                  </li>                   
                </ul>
             </div>
             <div class="clearfix"> </div>
@@ -395,13 +401,13 @@
                </div>-->
                <div class=" col-md-5 mb-4">
                   <div class="inner-info-w3ls">
-                     <h6>Elija el inmueble a controlar</h6>
+                    <!--  <h6>Elija el inmueble a controlar</h6>
                         <select>
                            <option>Seleccione el ascensor de:</option>
                            <option>Urb. la estadia</option>
                            <option>Rescaven Chuao</option>
                            <option>Recarven Las Mercedes</option>
-                        </select>
+                        </select> -->
                      <!--<p><span class="fa fa-calendar-check-o" aria-hidden="true"></span>12 feb 2017</p>
                      <p class="para-agileits">Aenean pulvinar diam vel felis volutpat dictum, suscipit sapien scelerisque tempus non mollis massa. Aenean ac tellus
                         suscipit sapien scelerisque tempus non mollis massa.
@@ -419,30 +425,56 @@
                   <form action="<?php echo $_SERVER['PHP_SELF']; ?>" method="get">
                      <div class="row justify-content-start">
                         <div class="col-md-3">
-                        <button type="submit" class="btn btn-warning" name="subir">
-                           Subir un piso
-                        </button>
-                        <button type="submit" class="btn btn-warning mt-2" name="bajar">
-                           Bajar un piso
-                        </button>                        
-                     </div>
-                     <div class="col-md-3">
-                        <button type="submit" class="btn btn-warning" name="abrir">
-                           Abrir puerta   
-                        </button>
-                        <button type="submit" class="btn btn-warning mt-2" name="cerrar">
-                           Cerrar puerta
-                        </button>                        
-                     </div>
-                     <div class="col-md-3">
-                        <button type="submit" class="btn btn-warning" name="reset">
-                           Resetear
-                        </button>     
-                     </div>                   
+                           <button type="submit" class="btn btn-warning" name="subir">
+                              Subir un piso
+                           </button>
+                           <button type="submit" class="btn btn-warning mt-2" name="bajar">
+                              Bajar un piso
+                           </button>                        
+                        </div>
+                        <div class="col-md-3">
+                           <button type="submit" class="btn btn-warning" name="abrir">
+                              Abrir puerta   
+                           </button>
+                           <button type="submit" class="btn btn-warning mt-2" name="cerrar">
+                              Cerrar puerta
+                           </button>                        
+                        </div>
+                        <div class="col-md-3">
+                           <button type="submit" class="btn btn-warning" name="reset">
+                              Resetear
+                           </button> 
+                        </div>                                                      
                      </div>
                   </form>
+                  <!-- <form action="reportes/print.php" method="post">
+                     <div class="row justify-content-start ">
+                        <div class="col-md-2 mt-2">
+                           <button type="submit" class="btn btn-warning btn-block" name="excel">
+                              Excel
+                           </button> 
+                        </div> 
+                        <div class="col-md-2 mt-2">
+                           <button type="submit" class="btn btn-warning btn-block" name="word">
+                              Word
+                           </button> 
+                        </div>
+                        <div class="col-md-2 mt-2">
+                           <button type="submit" class="btn btn-warning btn-block" name="pdf">
+                              Pdf
+                           </button> 
+                        </div>
+                        <div class="col-md-2 mt-2">
+                           <button type="submit" class="btn btn-warning btn-block" name="print">
+                              Ver
+                           </button> 
+                        </div>
+                     </div>
+                  </form> -->                    
                </div> 
             </div>
+
+
 
                  <!-- <div class="w3layouts_more-buttn bolg-bttn">
                      <a href="#about" class="scroll">Get More</a>
@@ -470,10 +502,49 @@
                   <a href="#about" class="scroll">
                   </a>-->
                </div>
+               <div class="col-md-7">
+                  <div class="inner-info-w3ls">
+                     <h6>Elija un formato para imprimir el reporte</h6>
+                      <form action="reportes/print.php" method="post">
+                        <div class="row justify-content-start ">
+                           <div class="col-md-3 mt-2">
+                              <button type="submit" class="btn btn-warning btn-block" name="excel">
+                                 <i class="fa fa-file-excel-o fa-lg" aria-hidden="true"></i> Excel
+                              </button> 
+                           </div> 
+                           <div class="col-md-3 mt-2">
+                              <button type="submit" class="btn btn-warning btn-block" name="word">
+                                 <i class="fa fa-file-word-o fa-lg" aria-hidden="true"></i> Word
+                              </button> 
+                           </div>
+                           <div class="col-md-3 mt-2">
+                              <button type="submit" class="btn btn-warning btn-block" name="pdf">
+                                 <i class="fa fa-file-pdf-o fa-lg" aria-hidden="true"></i> Pdf
+                              </button> 
+                           </div>
+                           <div class="col-md-3 mt-2">
+                              <button type="submit" class="btn btn-warning btn-block" name="print">
+                                 <i class="fa fa-eye fa-lg" aria-hidden="true"></i> Ver
+                              </button> 
+                           </div>
+                        </div>
+                     </form>   
+                     <!--<p><span class="fa fa-calendar-check-o" aria-hidden="true"></span>15 july 2017</p>
+                     <p class="para-agileits">Aenean pulvinar diam vel felis volutpat dictum, suscipit sapien scelerisque tempus non mollis massa. Aenean ac tellus
+                        suscipit sapien scelerisque tempus non mollis massa.
+                     </p>-->
+                   </div>
+                 <!-- <div class="w3layouts_more-buttn bolg-bttn">
+                     <a href="#about" class="scroll">Get More</a>
+                  </div>-->
+             <!--   </div>-->
+              <!-- <div class=" col-md-7 blog-img blog-img2-agileits-w3layouts">
+                  <a href="#about" class="scroll">
+                  </a>-->
+               </div>
                <div class="clearfix"></div>
             </div>
          </div>
-
       </div>
       <!--//blog -->
       <!--testimonials
