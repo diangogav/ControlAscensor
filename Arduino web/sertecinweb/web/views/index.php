@@ -1,3 +1,4 @@
+<?php require "../../controller/session.php" ?>
 <!DOCTYPE html>
 <html lang="zxx">
    <head>
@@ -18,24 +19,24 @@
       </script>
       <!--//meta tags ends here-->
       <!--booststrap-->
-      <link href="css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
+      <link href="../css/bootstrap.min.css" rel="stylesheet" type="text/css" media="all">
       <!--//booststrap end-->
       <!-- font-awesome icons -->
-      <link href="css/font-awesome2.css" rel="stylesheet">
+      <link href="../css/font-awesome2.css" rel="stylesheet">
       <!-- //font-awesome icons -->
       <!-- Nav-CSS -->	
-	    <link rel="stylesheet" href="css/main.css">
+	    <link rel="stylesheet" href="../css/main.css">
       <!-- //Nav-CSS -->
-      <link href="css/popup-box.css" rel="stylesheet" type="text/css" media="all" />
+      <link href="../css/popup-box.css" rel="stylesheet" type="text/css" media="all" />
       <!-- //pop-ups-->
       <!--popup-box-->
-      <link href="css/owl.carousel.css" rel="stylesheet">
+      <link href="../css/owl.carousel.css" rel="stylesheet">
       <!--clients-->
       <!--lightbox slider-->
-      <link rel="stylesheet" href="css/lightbox.css">
+      <link rel="stylesheet" href="../css/lightbox.css">
       <!-- lightbox slider-->
       <!--stylesheets-->
-      <link href="css/style2.css" rel='stylesheet' type='text/css' media="all">
+      <link href="../css/style2.css" rel='stylesheet' type='text/css' media="all">
       <!--//stylesheets-->
       <link href="//fonts.googleapis.com/css?family=Montserrat:300,400,500" rel="stylesheet">
    </head>
@@ -57,10 +58,13 @@
  -->
 <div id="m_nav_container" class="m_nav">
   <ul id="m_nav_list" class="m_nav">
-                           <li class="m_nav_itemm" id="m_nav_item_1"> <a href="views/acciones.php" >Acciones</a></li>
+                           <li class="m_nav_itemm" id="m_nav_item_1"> <a href="acciones.php" >Acciones</a></li>
                            <li class="m_nav_item" id="moble_nav_item_2"> <a href="#about" class="scroll">Imprimir</a></li>
                            <li class="m_nav_item" id="moble_nav_item_3"> <a href="#services" class="scroll">Estadisticas</a></li>
                            <li class="m_nav_item" id="moble_nav_item_4"><a href="#gallery" class="scroll">Contactos</a></li>
+                           <li class="m_nav_item" id="moble_nav_item_4">
+                              <a href="../../controller/logout.php" class="scroll">Desloguearse</a>
+                           </li>
                            <!--<li class="m_nav_item" id="moble_nav_item_6"> <a href="#blog" class="scroll">Blog</a></li>
                            <li class="m_nav_item" id="moble_nav_item_7"> <a href="#contact" class="scroll">Contact</a></li>-->
   </ul>
@@ -68,7 +72,7 @@
                </div>
 			    <div class="container">
                <div class="hedder-logo">
-                  <h1><a href="index.html">Sertecinweb</a></h1>
+                  <h1><a href="index.php">Sertecinweb</a></h1>
                </div>
               <!-- <div class="banner_social">
                   <ul class="its_social_list">
@@ -580,14 +584,14 @@
       </footer>
 
       <!--js working-->
-      <script src='js/jquery-2.2.3.min.js'></script>
+      <script src='../js/jquery-2.2.3.min.js'></script>
       <!--//js working-->
 	  			<!--  light box js -->
-		<script src="js/lightbox-plus-jquery.min.js"> </script> 
+		<script src="../js/lightbox-plus-jquery.min.js"> </script> 
 		<!-- //light box js--> 
 
       <!--responsiveslides banner-->
-      <script src="js/responsiveslides.min.js"></script>
+      <script src="../js/responsiveslides.min.js"></script>
       <script>
          // You can also use "$(window).load(function() {"
          $(function () {
@@ -611,7 +615,7 @@
       <!--// responsiveslides banner-->	  
 	  
       <!-- testimonial-plugin -->
-      <script src="js/owl.carousel.js"></script>
+      <script src="../js/owl.carousel.js"></script>
       <script>
          $(document).ready(function () {
          	$("#owl-demo").owlCarousel({
@@ -627,7 +631,7 @@
       <!-- //testimonial-plugin -->
 
       <!--pop-up-box video-->
-      <script src="js/jquery.magnific-popup.js"></script>
+      <script src="../js/jquery.magnific-popup.js"></script>
       <script>
          $(document).ready(function() {
          $('.popup-with-zoom-anim').magnificPopup({
@@ -647,15 +651,15 @@
       <!-- //pop-up-box video -->
 	  
       <!-- start-smoth-scrolling -->
-      <script src="js/move-top.js"></script>
+      <script src="../js/move-top.js"></script>
 	  	  	        <!-- menu -->
-      <script src="js/main.js"></script>
+      <script src="../js/main.js"></script>
       <!-- //menu -->
 	  
       <!--bootstrap working-->
-  <script src="js/bootstrap.min.js"></script>
+  <script src="../js/bootstrap.min.js"></script>
       <!-- //bootstrap working-->
-      <script src="js/easing.js"></script>
+      <script src="../js/easing.js"></script>
       <script>
          jQuery(document).ready(function ($) {
          	$(".scroll").click(function (event) {
