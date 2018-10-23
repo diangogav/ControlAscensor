@@ -7,7 +7,7 @@ $server = "mysql";
 $host = 'localhost';
 $dbname = 'arduino';
 $user = 'root';
-$pass = '';
+$pass = 'sagitario';
 
 ///////////////////////////////////////////////////////////////////////////////
 // Conexion a la BD, si hay algun error devuelve alert en pantalla con error //

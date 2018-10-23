@@ -2,7 +2,7 @@
 require "../../../controller/conexion.php";
 $print = $_POST['print'];
 	
-$query = "SELECT * FROM historic";
+$query = "SELECT * FROM data";
 $ejecutar = $conexion->query($query);
 echo "
 <table class='table table-striped table-hover'>
@@ -17,7 +17,7 @@ foreach($ejecutar as $row){
  echo "
  <tr>
     <td class='text-center'>".$row['id']."</td>
-    <td class='text-center'>".Comando($row['command'])."</td>
+    <td class='text-center'>".Comando($row['data'])."</td>
     <td class='text-center'>".$row['time']."</td>
  </tr>   
  ";
