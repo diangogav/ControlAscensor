@@ -6,7 +6,8 @@ $(function(){
         method: "get",
         dataType: 'json',
         success: function(data){
-          const estado = Number(data.command);
+          console.log(data.data);
+          const estado = Number(data.data);
           estadoAscensor(estado);
         },
         error: function(jqXHR, textStatus, errorThrown){
