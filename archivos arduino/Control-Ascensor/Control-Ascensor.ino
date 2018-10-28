@@ -53,6 +53,11 @@ void setup() {
   pinMode(DOOR2,OUTPUT);
   pinMode(DOOR3,OUTPUT);
   pinMode(DOOR4,OUTPUT);
+
+  digitalWrite(DOOR1,HIGH);
+  digitalWrite(DOOR2,HIGH);
+  digitalWrite(DOOR3,HIGH);
+  digitalWrite(DOOR4,HIGH);
   
   sqlSerial.begin(BAUD_RATE);
 }
@@ -75,13 +80,13 @@ void SendCommandMySQL(int dat){
 }
 
 bool CloseDoors(){
-  digitalWrite(DOOR1,HIGH);
+  digitalWrite(DOOR1,LOW);
   delay(1000);
-  digitalWrite(DOOR2,HIGH);
+  digitalWrite(DOOR2,LOW);
   delay(1000);
-  digitalWrite(DOOR3,HIGH);
+  digitalWrite(DOOR3,LOW);
   delay(1000);
-  digitalWrite(DOOR4,HIGH);
+  digitalWrite(DOOR4,LOW);
   
   flagDoor = 1;
   
@@ -90,13 +95,13 @@ bool CloseDoors(){
 
 bool OpenDoors(){
   
-  digitalWrite(DOOR4,LOW);
+  digitalWrite(DOOR4,HIGH);
   delay(1000);
-  digitalWrite(DOOR3,LOW);
+  digitalWrite(DOOR3,HIGH);
   delay(1000);
-  digitalWrite(DOOR2,LOW);
+  digitalWrite(DOOR2,HIGH);
   delay(1000);
-  digitalWrite(DOOR1,LOW);
+  digitalWrite(DOOR1,HIGH);
   
   flagDoor = 0;
   
@@ -158,8 +163,8 @@ void loop() {
 if(ESTADO == "INICIO"){
   
   //ACCIONES
-  digitalWrite(M1SUBE,LOW);
-  digitalWrite(M1BAJA,LOW);
+  digitalWrite(M1SUBE,HIGH);
+  digitalWrite(M1BAJA,HIGH);
   //digitalWrite(M2ABRE,LOW);
   //digitalWrite(M2CIERRA,LOW);
   
@@ -321,8 +326,8 @@ sqlSerial.println("SUBIENDO");
   
   //digitalWrite(M2ABRE,LOW);
   //digitalWrite(M2CIERRA,LOW);
-  digitalWrite(M1SUBE,HIGH);
-  digitalWrite(M1BAJA,LOW);
+  digitalWrite(M1SUBE,LOW);
+  digitalWrite(M1BAJA,HIGH);
 
   //TRANSICCION
   if((previousLevel == 0 &&
@@ -344,8 +349,8 @@ sqlSerial.println("SUBIENDO");
 if(ESTADO == "PARANDO"){
 sqlSerial.println("PARANDO");
   //ACCIONES
-  digitalWrite(M1SUBE,LOW);
-  digitalWrite(M1BAJA,LOW);  
+  digitalWrite(M1SUBE,HIGH);
+  digitalWrite(M1BAJA,HIGH);  
   
   //TRANSICCION
   if(flagDoor == 1){
@@ -547,8 +552,8 @@ sqlSerial.println("BAJANDO");
   
   //digitalWrite(M2ABRE,LOW);
   //digitalWrite(M2CIERRA,LOW);
-  digitalWrite(M1SUBE,LOW);
-  digitalWrite(M1BAJA,HIGH);
+  digitalWrite(M1SUBE,HIGH);
+  digitalWrite(M1BAJA,LOW);
 
   //TRANSICCION
     if((previousLevel == 2 &&
