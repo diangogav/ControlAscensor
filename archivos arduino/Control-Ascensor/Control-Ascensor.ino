@@ -71,29 +71,29 @@ void SendCommandMySQL(int dat){
 }
 
 int CheckOpenDoors(){
-  if(digitalRead(XPA) == 1 &&
-     digitalRead(XPC) == 0){
+  if(digitalRead(XPA) == 0 &&
+     digitalRead(XPC) == 1){
       return 1;
      }
 
-  if(digitalRead(XPA) == 0 &&
-     digitalRead(XPC) == 1){
-      return 0;
-     }
-
-  if(digitalRead(XPA) == 0 && 
+  if(digitalRead(XPA) == 1 &&
      digitalRead(XPC) == 0){
-      return -1;
+      return 0;
      }
 
   if(digitalRead(XPA) == 1 && 
      digitalRead(XPC) == 1){
+      return -1;
+     }
+
+  if(digitalRead(XPA) == 0 && 
+     digitalRead(XPC) == 0){
       return -2;
      }
 }
 
 int CheckPB(){
-  if(digitalRead(XS0A) == 1 && digitalRead(XS0B) == 1){
+  if(digitalRead(XS0A) == 0 && digitalRead(XS0B) == 0){
     return 1;
   }else{
     return 0;
@@ -101,7 +101,7 @@ int CheckPB(){
 }
 
 int CheckP1(){
-  if(digitalRead(XS1A) == 1 && digitalRead(XS1B) == 1){
+  if(digitalRead(XS1A) == 0 && digitalRead(XS1B) == 0){
     return 1;
   }else{
     return 0;
@@ -109,7 +109,7 @@ int CheckP1(){
 }
 
 int CheckP2(){
-  if(digitalRead(XS2A) == 1 && digitalRead(XS2B) == 1){
+  if(digitalRead(XS2A) == 0 && digitalRead(XS2B) == 0){
     return 1;
   }{
     return 0;

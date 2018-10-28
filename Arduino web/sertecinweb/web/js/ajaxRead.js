@@ -7,7 +7,7 @@ $(function(){
         dataType: 'json',
         success: function(data){
           console.log(data.data);
-          const estado = Number(data.data);
+          const estado = Number(data.command);
           estadoAscensor(estado);
         },
         error: function(jqXHR, textStatus, errorThrown){
