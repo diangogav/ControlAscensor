@@ -177,7 +177,7 @@ if(ESTADO == "INICIO"){
 // Sensando: encuentra la ubicación actual del ascensor
 if(ESTADO == "SENSANDO"){
   //ACCIONES
-  sqlSerial.println("SENSANDO");
+  
   //TRANSICCION
   if(CheckPB() == 1 &&
      CheckP1() == 0 && 
@@ -203,8 +203,7 @@ if(ESTADO == "SENSANDO"){
 //=========================================================
 // Reposando PB: El ascensor se encuentra en planta baja
 if(ESTADO == "REPOSANDO PB"){
-
-sqlSerial.println("REPOSANDO PB");
+  
   //digitalWrite(M2ABRE,LOW);
   //digitalWrite(M2CIERRA,LOW);
 
@@ -242,7 +241,7 @@ if(flagMessage == 0){
 //=========================================================
 // CONFIGURANDO SUBIR: Configura las banderas para subir
 if(ESTADO == "CONFIGURANDO SUBIR"){
-  sqlSerial.println("CONFIGUANDO SUBIR");
+  
   //ACCIONES
   flagS = 1;
   flagB = 0;
@@ -261,7 +260,7 @@ if(ESTADO == "CONFIGURANDO SUBIR"){
 //=========================================================
 // Cerrando: Se prende el motor M2 en sentido para cerra las puertas
 if(ESTADO == "CERRANDO"){
-sqlSerial.println("CERRANDO");
+
   //ACCIONES
   //digitalWrite(M2CIERRA,HIGH);
   //digitalWrite(M2ABRE,LOW);
@@ -312,7 +311,7 @@ sqlSerial.println("CERRANDO");
 //=========================================================
 // Subiendo: Se enciende el motor M1 en sentido subir
 if(ESTADO == "SUBIENDO"){
-sqlSerial.println("SUBIENDO");
+
   //ACCIONES
   if(flagMessage == 0){
     if(previousLevel == 0){
@@ -347,7 +346,7 @@ sqlSerial.println("SUBIENDO");
 //=========================================================
 // Parando: Se apaga el motor M1
 if(ESTADO == "PARANDO"){
-sqlSerial.println("PARANDO");
+
   //ACCIONES
   delay(200);
   digitalWrite(M1SUBE,HIGH);
@@ -414,7 +413,7 @@ if(flagMessage == 0){
 // Reposando P1: El ascensor se encuentra reposando en P1
 if(ESTADO == "REPOSANDO P1"){
   //ACCIONES
-sqlSerial.println("REPOSANDO P1");
+
   //digitalWrite(M2ABRE,LOW);
   //digitalWrite(M2CIERRA,LOW);
 
@@ -469,7 +468,7 @@ sqlSerial.println("REPOSANDO P1");
 // Reposando P2: El ascensor se encuentra reposando en P2
 if(ESTADO == "REPOSANDO P2"){
   //ACCIONES
-sqlSerial.println("REPOSANDO P2");
+
   if(flagMessage == 0){
     if(flagDoor == 0){
      sqlSerial.println(23);
@@ -518,7 +517,7 @@ sqlSerial.println("REPOSANDO P2");
 // Configurando Bajar: Se configuran las banderas para bajar
 if(ESTADO == "CONFIGURANDO BAJAR"){
 
-sqlSerial.println("CONFIGURANDO PARA BAJAR");
+
   //ACCIONES
   flagB = 1;
   flagS = 0;
@@ -536,7 +535,6 @@ sqlSerial.println("CONFIGURANDO PARA BAJAR");
 // Bajando: Se enciende el motor M2 en sentido bajar
 if(ESTADO == "BAJANDO"){
 
-sqlSerial.println("BAJANDO");
   //ACCIONES
   if(flagMessage == 0){
     if(previousLevel == 2){
