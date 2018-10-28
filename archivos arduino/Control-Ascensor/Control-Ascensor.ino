@@ -349,6 +349,7 @@ sqlSerial.println("SUBIENDO");
 if(ESTADO == "PARANDO"){
 sqlSerial.println("PARANDO");
   //ACCIONES
+  delay(200);
   digitalWrite(M1SUBE,HIGH);
   digitalWrite(M1BAJA,HIGH);  
   
