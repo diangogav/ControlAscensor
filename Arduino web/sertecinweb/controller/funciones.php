@@ -51,6 +51,9 @@ function Comando($command){
 		case 61:
 			return "Bajando a PB";
 		break;
+		case -1:
+			return "Error";
+		break;
 		case 255:
 			return "Reiniciando";
 		break;

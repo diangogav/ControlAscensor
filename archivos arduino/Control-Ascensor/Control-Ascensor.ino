@@ -581,9 +581,7 @@ if(ESTADO == "BAJANDO"){
     if(previousLevel == 1){
         sqlSerial.println(61);
     }
-    if(previousLevel == 255){
-        sqlSerial.println(255);
-    }  
+    
     flagMessage = 1;
   }
   
@@ -609,9 +607,14 @@ if(ESTADO == "BAJANDO"){
 //=========================================================
 // Reseteando: El ascensor volverà a PB
    if(ESTADO == "RESETEANDO"){
+   
+    if(flagMessage == 0){
+      flagMessage = 1;
+    }
     
     //ACCIONES
-    sqlSerial.println("RESET");
+    
+    sqlSerial.println(255);
     //digitalWrite(M2ABRE,LOW);
     //digitalWrite(M2CIERRA,LOW);
     previousLevel = 255;     
