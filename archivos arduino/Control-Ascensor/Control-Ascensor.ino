@@ -6,22 +6,26 @@ const byte txPin = 10;
 
 #define M1SUBE 9
 #define M1BAJA 11
-#define M2ABRE 12
-#define M2CIERRA 13
 
 #define XS0A 1
-#define XS0B 2
 #define XS1A 3
-#define XS1B 4
 #define XS2A 5
+
+#define XS0B 2
+#define XS1B 4
 #define XS2B 6
 
-#define XPA 7
-#define XPC 8
+
+//LED´S INDICADORES DE PUERTA
+#define DOOR1 7
+#define DOOR2 8
+#define DOOR3 12
+#define DOOR4 13
 
 uint8_t dat;
 uint8_t flagS = 0;
 uint8_t flagB = 0;
+uint8_t flagDoor = 0;
 uint8_t previousLevel;
 uint8_t flagMessage = 0;
 
@@ -37,18 +41,18 @@ void setup() {
 
   pinMode(M1SUBE,OUTPUT);
   pinMode(M1BAJA,OUTPUT);
-  pinMode(M2ABRE,OUTPUT);
-  pinMode(M2CIERRA,OUTPUT);
   
   pinMode(XS0A,INPUT);
-  pinMode(XS0B,INPUT);
+  //pinMode(XS0B,INPUT);
   pinMode(XS1A,INPUT);
-  pinMode(XS1B,INPUT);
+  //pinMode(XS1B,INPUT);
   pinMode(XS2A,INPUT);
-  pinMode(XS2B,INPUT);
+  //pinMode(XS2B,INPUT);
   
-  pinMode(XPA,INPUT);
-  pinMode(XPC,INPUT);
+  pinMode(DOOR1,OUTPUT);
+  pinMode(DOOR2,OUTPUT);
+  pinMode(DOOR3,OUTPUT);
+  pinMode(DOOR4,OUTPUT);
   
   sqlSerial.begin(BAUD_RATE);
 }
@@ -70,7 +74,36 @@ void SendCommandMySQL(int dat){
   sqlSerial.println(cadena1 + cadena2);
 }
 
-int CheckOpenDoors(){
+bool CloseDoors(){
+  digitalWrite(DOOR1,HIGH);
+  delay(1000);
+  digitalWrite(DOOR2,HIGH);
+  delay(1000);
+  digitalWrite(DOOR3,HIGH);
+  delay(1000);
+  digitalWrite(DOOR4,HIGH);
+  
+  flagDoor = 1;
+  
+  return true;
+}
+
+bool OpenDoors(){
+  
+  digitalWrite(DOOR4,LOW);
+  delay(1000);
+  digitalWrite(DOOR3,LOW);
+  delay(1000);
+  digitalWrite(DOOR2,LOW);
+  delay(1000);
+  digitalWrite(DOOR1,LOW);
+  
+  flagDoor = 0;
+  
+  return true;
+}
+
+/*int CheckOpenDoors(){
   if(digitalRead(XPA) == 0 &&
      digitalRead(XPC) == 1){
       return 1;
@@ -91,9 +124,9 @@ int CheckOpenDoors(){
       return -2;
      }
 }
-
+*/
 int CheckPB(){
-  if(digitalRead(XS0A) == 0 && digitalRead(XS0B) == 0){
+  if(digitalRead(XS0A) == 0){
     return 1;
   }else{
     return 0;
@@ -101,7 +134,7 @@ int CheckPB(){
 }
 
 int CheckP1(){
-  if(digitalRead(XS1A) == 0 && digitalRead(XS1B) == 0){
+  if(digitalRead(XS1A) == 0){
     return 1;
   }else{
     return 0;
@@ -109,7 +142,7 @@ int CheckP1(){
 }
 
 int CheckP2(){
-  if(digitalRead(XS2A) == 0 && digitalRead(XS2B) == 0){
+  if(digitalRead(XS2A) == 0){
     return 1;
   }{
     return 0;
@@ -127,8 +160,8 @@ if(ESTADO == "INICIO"){
   //ACCIONES
   digitalWrite(M1SUBE,LOW);
   digitalWrite(M1BAJA,LOW);
-  digitalWrite(M2ABRE,LOW);
-  digitalWrite(M2CIERRA,LOW);
+  //digitalWrite(M2ABRE,LOW);
+  //digitalWrite(M2CIERRA,LOW);
   
   //TRANSICCION
   ESTADO = "SENSANDO";
@@ -139,7 +172,7 @@ if(ESTADO == "INICIO"){
 // Sensando: encuentra la ubicación actual del ascensor
 if(ESTADO == "SENSANDO"){
   //ACCIONES
-
+  sqlSerial.println("SENSANDO");
   //TRANSICCION
   if(CheckPB() == 1 &&
      CheckP1() == 0 && 
@@ -166,13 +199,14 @@ if(ESTADO == "SENSANDO"){
 // Reposando PB: El ascensor se encuentra en planta baja
 if(ESTADO == "REPOSANDO PB"){
 
-  digitalWrite(M2ABRE,LOW);
-  digitalWrite(M2CIERRA,LOW);
+sqlSerial.println("REPOSANDO PB");
+  //digitalWrite(M2ABRE,LOW);
+  //digitalWrite(M2CIERRA,LOW);
 
 if(flagMessage == 0){
-  if(CheckOpenDoors() == 1){
+  if(flagDoor == 1){
        sqlSerial.println(03);
-    }else if(CheckOpenDoors() == 0){
+    }else if(flagDoor == 0){
       sqlSerial.println(00);
     }
     flagMessage = 1; 
@@ -186,14 +220,14 @@ if(flagMessage == 0){
    }
 
    if(dat == 50 &&
-      CheckOpenDoors() == 0)
+      flagDoor == 1)
    {
       flagMessage = 0; 
       ESTADO = "ABRIENDO";
    }
 
    if(dat == 51 &&
-      CheckOpenDoors() == 1)
+      flagDoor == 0)
    {
       flagMessage = 0;
       ESTADO = "CERRANDO";
@@ -203,18 +237,18 @@ if(flagMessage == 0){
 //=========================================================
 // CONFIGURANDO SUBIR: Configura las banderas para subir
 if(ESTADO == "CONFIGURANDO SUBIR"){
-
+  sqlSerial.println("CONFIGUANDO SUBIR");
   //ACCIONES
   flagS = 1;
   flagB = 0;
   
   //TRANSICCION
-  if(CheckOpenDoors() == 1){
+  if(flagDoor == 0){
      ESTADO = "CERRANDO";
    }
 
   //TRANSICCION
-  if(CheckOpenDoors() == 0){
+  if(flagDoor == 1){
      ESTADO = "SUBIENDO";
    }
 }
@@ -222,11 +256,12 @@ if(ESTADO == "CONFIGURANDO SUBIR"){
 //=========================================================
 // Cerrando: Se prende el motor M2 en sentido para cerra las puertas
 if(ESTADO == "CERRANDO"){
-
+sqlSerial.println("CERRANDO");
   //ACCIONES
-  digitalWrite(M2CIERRA,HIGH);
-  digitalWrite(M2ABRE,LOW);
-
+  //digitalWrite(M2CIERRA,HIGH);
+  //digitalWrite(M2ABRE,LOW);
+  CloseDoors();
+  
   if(flagMessage == 0){
     if(previousLevel == 2){
       sqlSerial.println(21);
@@ -241,7 +276,7 @@ if(ESTADO == "CERRANDO"){
   }
   
   //TRANSICCION
-   if(CheckOpenDoors() == 0){
+   if(flagDoor == 1){
       
       if(flagS == 0 && flagB == 0 && previousLevel == 0){
           flagMessage = 0;
@@ -272,7 +307,7 @@ if(ESTADO == "CERRANDO"){
 //=========================================================
 // Subiendo: Se enciende el motor M1 en sentido subir
 if(ESTADO == "SUBIENDO"){
-
+sqlSerial.println("SUBIENDO");
   //ACCIONES
   if(flagMessage == 0){
     if(previousLevel == 0){
@@ -284,8 +319,8 @@ if(ESTADO == "SUBIENDO"){
     flagMessage = 1;
   }
   
-  digitalWrite(M2ABRE,LOW);
-  digitalWrite(M2CIERRA,LOW);
+  //digitalWrite(M2ABRE,LOW);
+  //digitalWrite(M2CIERRA,LOW);
   digitalWrite(M1SUBE,HIGH);
   digitalWrite(M1BAJA,LOW);
 
@@ -307,13 +342,13 @@ if(ESTADO == "SUBIENDO"){
 //=========================================================
 // Parando: Se apaga el motor M1
 if(ESTADO == "PARANDO"){
-
+sqlSerial.println("PARANDO");
   //ACCIONES
   digitalWrite(M1SUBE,LOW);
   digitalWrite(M1BAJA,LOW);  
   
   //TRANSICCION
-  if(CheckOpenDoors() == 0){
+  if(flagDoor == 1){
      ESTADO = "ABRIENDO";    
    }
 }
@@ -322,9 +357,10 @@ if(ESTADO == "PARANDO"){
 // Abriendo: Se enciende el motor M1 en sentido abrir
 if(ESTADO == "ABRIENDO"){
   //ACCIONES
-
-  digitalWrite(M2ABRE,HIGH);
-  digitalWrite(M2CIERRA,LOW);
+sqlSerial.println("ABRIENDO");
+  //digitalWrite(M2ABRE,HIGH);
+  //digitalWrite(M2CIERRA,LOW);
+OpenDoors();
 
 if(flagMessage == 0){
   if((previousLevel == 2 && flagB == 0 && flagS == 0) ||
@@ -343,7 +379,7 @@ if(flagMessage == 0){
   flagMessage = 1;
 }
 
-  if(CheckOpenDoors() == 1){
+  if(flagDoor == 0){
     
       if((previousLevel == 0 && flagS == 1) || 
          (previousLevel == 1 && flagS == 0 && flagB == 0) ||
@@ -372,14 +408,14 @@ if(flagMessage == 0){
 // Reposando P1: El ascensor se encuentra reposando en P1
 if(ESTADO == "REPOSANDO P1"){
   //ACCIONES
-
-  digitalWrite(M2ABRE,LOW);
-  digitalWrite(M2CIERRA,LOW);
+sqlSerial.println("REPOSANDO P1");
+  //digitalWrite(M2ABRE,LOW);
+  //digitalWrite(M2CIERRA,LOW);
 
   if(flagMessage == 0){
-     if(CheckOpenDoors() == 1){
+     if(flagDoor == 0){
        sqlSerial.println(13);
-    }else if(CheckOpenDoors() == 0){
+    }else if(flagDoor == 1){
       sqlSerial.println(10);
     }
     flagMessage = 1;
@@ -389,8 +425,8 @@ if(ESTADO == "REPOSANDO P1"){
   previousLevel = 1;
   dat = GetSerialData();
   
-  digitalWrite(M2ABRE,LOW);
-  digitalWrite(M2CIERRA,LOW); 
+  //digitalWrite(M2ABRE,LOW);
+  //digitalWrite(M2CIERRA,LOW); 
   
   //TRANSICCION
   if(dat == 48){
@@ -404,14 +440,14 @@ if(ESTADO == "REPOSANDO P1"){
    }
      
    if(dat == 50 &&
-      CheckOpenDoors() == 0)
+      flagDoor == 1)
    {
       flagMessage = 0;
       ESTADO = "ABRIENDO";
    }
 
    if(dat == 51 &&
-      CheckOpenDoors() == 1)
+      flagDoor == 0)
    {
       flagMessage = 0;
       ESTADO = "CERRANDO";   
@@ -427,25 +463,25 @@ if(ESTADO == "REPOSANDO P1"){
 // Reposando P2: El ascensor se encuentra reposando en P2
 if(ESTADO == "REPOSANDO P2"){
   //ACCIONES
-
+sqlSerial.println("REPOSANDO P2");
   if(flagMessage == 0){
-    if(CheckOpenDoors() == 1){
+    if(flagDoor == 0){
      sqlSerial.println(23);
-    }else if(CheckOpenDoors() == 0){
+    }else if(flagDoor == 1){
       sqlSerial.println(20);
     }
       flagMessage = 1;
   }
   
-  digitalWrite(M2ABRE,LOW);
-  digitalWrite(M2CIERRA,LOW);
+  //digitalWrite(M2ABRE,LOW);
+  //digitalWrite(M2CIERRA,LOW);
      
   flagS = 0;
   previousLevel = 2;
   dat = GetSerialData();
   
-  digitalWrite(M2ABRE,LOW);
-  digitalWrite(M2CIERRA,LOW);
+  //digitalWrite(M2ABRE,LOW);
+  //digitalWrite(M2CIERRA,LOW);
 
   //TRANSICCION
   if(dat == 49){
@@ -454,13 +490,13 @@ if(ESTADO == "REPOSANDO P2"){
      ESTADO = "CONFIGURANDO BAJAR";   
    }
    
-   if(dat == 50 && CheckOpenDoors() == 0)
+   if(dat == 50 && flagDoor == 1)
    {
       flagMessage = 0;
       ESTADO = "ABRIENDO";
    }
 
-   if(dat == 51 && CheckOpenDoors() == 1)
+   if(dat == 51 && flagDoor == 0)
    {
       flagMessage = 0;
       ESTADO = "CERRANDO";   
@@ -476,16 +512,16 @@ if(ESTADO == "REPOSANDO P2"){
 // Configurando Bajar: Se configuran las banderas para bajar
 if(ESTADO == "CONFIGURANDO BAJAR"){
 
-
+sqlSerial.println("CONFIGURANDO PARA BAJAR");
   //ACCIONES
   flagB = 1;
   flagS = 0;
 
   //TRANSICCION
-  if(CheckOpenDoors() == 1){
+  if(flagDoor == 0){
      ESTADO = "CERRANDO";   
    }
-   if(CheckOpenDoors() == 0){
+   if(flagDoor == 1){
      ESTADO = "BAJANDO";   
    }
 }
@@ -494,7 +530,7 @@ if(ESTADO == "CONFIGURANDO BAJAR"){
 // Bajando: Se enciende el motor M2 en sentido bajar
 if(ESTADO == "BAJANDO"){
 
-
+sqlSerial.println("BAJANDO");
   //ACCIONES
   if(flagMessage == 0){
     if(previousLevel == 2){
@@ -509,8 +545,8 @@ if(ESTADO == "BAJANDO"){
     flagMessage = 1;
   }
   
-  digitalWrite(M2ABRE,LOW);
-  digitalWrite(M2CIERRA,LOW);
+  //digitalWrite(M2ABRE,LOW);
+  //digitalWrite(M2CIERRA,LOW);
   digitalWrite(M1SUBE,LOW);
   digitalWrite(M1BAJA,HIGH);
 
@@ -532,8 +568,9 @@ if(ESTADO == "BAJANDO"){
 // Reseteando: El ascensor volverà a PB
    if(ESTADO == "RESETEANDO"){
     //ACCIONES
-    digitalWrite(M2ABRE,LOW);
-    digitalWrite(M2CIERRA,LOW);
+    sqlSerial.println("RESET");
+    //digitalWrite(M2ABRE,LOW);
+    //digitalWrite(M2CIERRA,LOW);
     previousLevel = 255;     
     ESTADO = "CONFIGURANDO BAJAR";   
   }
